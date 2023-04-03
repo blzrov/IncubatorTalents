@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 
@@ -8,7 +7,7 @@ import { withIronSessionSsr } from "iron-session/next";
 
 import axios from "/utils/rest";
 import Container from "react-bootstrap/Container";
-import { SimpleGrid, Text, Space, Card, Group, Button, useMantineTheme, Loader, Progress } from "@mantine/core";
+import { SimpleGrid, Text, Space, Image, Card, Group, Button, useMantineTheme, Loader, Progress } from "@mantine/core";
 
 export default function Home({ courses }) {
   const theme = useMantineTheme();
@@ -22,42 +21,43 @@ export default function Home({ courses }) {
       </Head>
       <Container>
         <Space h="xl" />
-        <Text size="xl" weight={700} color="orange" transform="uppercase">
-          Доступные курсы
+        <Text size="xl" weight={700} color="#036459" transform="uppercase">
+          Мои курсы
         </Text>
         <Space h="lg" />
-
         <SimpleGrid cols={3}>
           {courses.map(({ course, tasks, tasks_ready }) => {
             return (
-              <Card p="lg" key={course.id} style={{ boxShadow: "0 0 12px #999", marginBottom: "20px" }}>
-                <Card.Section style={{ position: "relative" }}>
-                  <Text
-                    color="orange"
-                    size="lg"
-                    weight={600}
-                    style={{
-                      position: "absolute",
-                      bottom: "10px",
-                      left: "20px",
-                      zIndex: "10",
-                      filter: "drop-shadow(0px 0px 4px #333)",
-                    }}
-                  >
-                    Прогресс
-                  </Text>
-                  <Image src={"/" + course.image} width={300} height={180} alt="Инкубатор талантов" />
-                </Card.Section>
-                <Progress color="orange" size="lg" value={(tasks_ready / tasks) * 100} style={{ zIndex: "12" }} />
-                <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                  <Text weight={500}>{course.name}</Text>
-                </Group>
-                <Link passHref href={`/courses/${course.id}`}>
+              <Link key={course.id} passHref href={`/courses/${course.id}`}>
+                <Card
+                  shadow="sm"
+                  padding="lg"
+                  radius="md"
+                  withBorder
+                  style={{ paddingBottom: "6px", cursor: "pointer" }}
+                >
+                  <Card.Section style={{ position: "relative" }}>
+                    <Image src={"/" + course.image} height={125} alt="Инкубатор талантов" />
+                  </Card.Section>
+                  <Group position="apart">
+                    <Text weight={500}>{course.name}</Text>
+                  </Group>
+                  {/* <Link passHref href={`/courses/${course.id}`}>
                   <Button color="green" fullWidth style={{ marginTop: 14 }}>
                     Начать обучение
                   </Button>
-                </Link>
-              </Card>
+                </Link> */}
+                  <div style={{ textAlign: "end", fontSize: "16px", color: "#1FBEAC" }}>
+                    {Math.round((tasks_ready / tasks) * 100)}%
+                  </div>
+                  <Progress
+                    style={{ marginTop: "auto" }}
+                    color="#1FBEAC"
+                    size="sm"
+                    value={(tasks_ready / tasks) * 100}
+                  />
+                </Card>
+              </Link>
             );
           })}
         </SimpleGrid>

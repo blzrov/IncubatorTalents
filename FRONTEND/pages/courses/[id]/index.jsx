@@ -6,9 +6,10 @@ import { sessionOptions } from "/lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 import axios from "/utils/rest";
 
-import { Text, Container, Space, Card, Group, Button, useMantineTheme, Progress, Title } from "@mantine/core";
+import { Text, Space, Card, Group, Button, useMantineTheme, Progress, Title } from "@mantine/core";
 
 export default function Days({ course, days, tasks, tasks_ready }) {
   const theme = useMantineTheme();
