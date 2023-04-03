@@ -62,10 +62,10 @@ export default function Task({ task, day, course, task_status, messages }) {
 
   const dropzoneChildren = (status, theme) => (
     <Group position="center" spacing="xl" style={{ minHeight: 55, pointerEvents: "none" }}>
-      <FileUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={55} />
+      <Upload status={status} style={{ color: getIconColor(status, theme) }} size={55} />
       <div>
         <Text size="xl" inline>
-          Переместите файлы сюда
+          Загрузите файл с выполненным заданием
         </Text>
       </div>
     </Group>
@@ -73,6 +73,7 @@ export default function Task({ task, day, course, task_status, messages }) {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    if (files.length == 0) return;
     const body = new FormData();
     body.append("message", "");
     if (files) {
@@ -112,20 +113,12 @@ export default function Task({ task, day, course, task_status, messages }) {
       <Container>
         <Space h="xl" />
         <Card p="lg">
-          <Card.Section>
-            <Title
-              order={1}
-              weight={700}
-              style={{
-                color: "#fd7e14",
-              }}
-            >
-              {task.name}
-            </Title>
-            {/* <Text color="orange" size="xl" weight={600} style={{}}>
+          <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>{task.name}</div>
+          {/* <Card.Section>
+            <Text color="orange" size="xl" weight={600} style={{}}>
               Статус задания
-            </Text> */}
-          </Card.Section>
+            </Text>
+          </Card.Section> */}
           {/* <Space h="sm" /> */}
           {/* {task_status === "waiting" ? (
             <Text size="lg" weight={700} color="orange">
@@ -149,10 +142,9 @@ export default function Task({ task, day, course, task_status, messages }) {
           <Space h="lg" />
           {task_status !== "empty" ? (
             <>
-              <Text weight={500} color="blue">
-                В файлах ниже содержатся материалы для работы, скачайте их все и изучите
-              </Text>
-              <Space h="sm" />
+              <div style={{ color: "#036459", fontSize: "16px", fontWeight: "600" }}>
+                Скачайте материалы для работы и изучите их
+              </div>
               {task.files.map((file, index) => {
                 return (
                   <Text key={file} variant="link" component="a" href={`/${file}`}>
@@ -160,6 +152,7 @@ export default function Task({ task, day, course, task_status, messages }) {
                   </Text>
                 );
               })}
+
               <div className={styles.messages}>
                 {chat.map((message) => {
                   return (
@@ -187,21 +180,14 @@ export default function Task({ task, day, course, task_status, messages }) {
               {task_status !== "ready" && (
                 <div>
                   <form onSubmit={(e) => sendMessage(e)}>
-                    <div className={styles.input}>
-                      <button type="submit" id="send-message">
-                        Отправить
-                      </button>
-                    </div>
                     <Space h="sm" />
                     {files.length > 0 && (
-                      <>
-                        <Text size="sm">
-                          Прикрепленные файлы:{" "}
-                          {files.map((el) => {
-                            return ` ${el.name},`;
-                          })}
-                        </Text>
-                      </>
+                      <Text size="sm">
+                        Прикрепленные файлы:{" "}
+                        {files.map((el) => {
+                          return ` ${el.name},`;
+                        })}
+                      </Text>
                     )}
                     <Dropzone
                       onDrop={(files) => {
@@ -220,6 +206,9 @@ export default function Task({ task, day, course, task_status, messages }) {
                     >
                       {(status) => dropzoneChildren(status, theme)}
                     </Dropzone>
+                    <Button disabled={files.length == 0} fullWidth className="mt-1" type="submit" id="send-message">
+                      Отправить
+                    </Button>
                   </form>
                 </div>
               )}

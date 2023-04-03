@@ -67,8 +67,8 @@ export const Days = ({ opened, setOpened, courseId }) => {
   return (
     <div>
       {!addDayModalOpened && (
-        <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setOpened(false)}>
-          Отмена
+        <Button variant="light" color="green" onClick={() => setOpened(false)}>
+          Назад
         </Button>
       )}
       <Space h="sm" />

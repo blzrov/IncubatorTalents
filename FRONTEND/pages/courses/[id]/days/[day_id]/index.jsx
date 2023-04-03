@@ -55,9 +55,6 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
               >
                 {day.name}
               </Title>
-              <Text color="orange" size="xl" weight={600} style={{}}>
-                Прогресс
-              </Text>
             </Card.Section>
             <Progress color="#1FBEAC" size="lg" value={(tasks_ready / tasks.length) * 100} style={{ zIndex: "12" }} />
           </Col>

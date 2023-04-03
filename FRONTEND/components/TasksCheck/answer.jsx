@@ -135,7 +135,7 @@ export const Answer = ({ opened, setOpened, task }) => {
               );
             })}
           </div>
-          <Center>
+          <Center className="mt-2">
             <Button compact className="me-2" onClick={() => sendMessage(true)} id="send-message">
               Принять
             </Button>
