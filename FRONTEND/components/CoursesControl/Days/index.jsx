@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Modal, Stack, Space, Button, useMantineTheme, Center, Table } from "@mantine/core";
+import { Modal, Stack, Space, Button, useMantineTheme, Center, Table, SimpleGrid, Card } from "@mantine/core";
 import { Plus, TrashX, Edit, List, Loader } from "tabler-icons-react";
 import axios from "/utils/rest";
 
@@ -66,71 +66,80 @@ export const Days = ({ opened, setOpened, courseId }) => {
 
   return (
     <div>
-      <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setOpened(false)}>
-        Отмена
-      </Button>
-      <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setAddDayModalOpened(true)}>
-        Добавить день
-      </Button>
+      {!addDayModalOpened && (
+        <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setOpened(false)}>
+          Отмена
+        </Button>
+      )}
       <Space h="sm" />
-      <Table verticalSpacing="sm" striped highlightOnHover>
-        <thead>
-          <tr>
-            <th>Название</th>
-            <th>Изображение</th>
-            <th>Видео</th>
-            <th>Количество заданий</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          {!daysLoading &&
-            daysList.map((day) => {
-              return (
-                <tr key={day.id}>
-                  <td>{day.name}</td>
-                  <td>{day.image ? "Есть" : "Нет"}</td>
-                  <td>{day.video ? "Есть" : "Нет"}</td>
-                  <td>{day.connected_tasks}</td>
-                  <td>
-                    <Stack>
+      {!addDayModalOpened && ( //!addDayModalOpened && !tasksModalOpened
+        <>
+          <SimpleGrid cols={5}>
+            <Card
+              style={{ cursor: "pointer" }}
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              onClick={() => setAddDayModalOpened(true)}
+            >
+              <div
+                className="d-flex flex-column align-items-center"
+                style={{ color: "#DFDFDF", fontWeight: "600", fontSize: "16px", height: "165px" }}
+              >
+                <div style={{ fontSize: "20px", marginTop: "42px" }}>+</div>
+                <div>Добавить день</div>
+              </div>
+            </Card>
+            {!daysLoading &&
+              daysList.map((day) => {
+                return (
+                  <Card
+                    style={{ cursor: "pointer" }}
+                    shadow="sm"
+                    padding="lg"
+                    radius="md"
+                    withBorder
+                    key={day.id}
+                    onClick={() => {
+                      setTasksId(day.id);
+                      setTasksModalOpened(true);
+                    }}
+                  >
+                    <div className="d-flex flex-column justify-content-between" style={{ height: "165px" }}>
+                      <div style={{ color: "#036459", fontWeight: "600", padding: "15px 0 0 15px" }}>{day.name}</div>
                       <Button
-                        variant="outline"
-                        color="orange"
-                        leftIcon={<List />}
-                        onClick={() => {
-                          setTasksId(day.id);
-                          setTasksModalOpened(true);
-                        }}
-                      >
-                        Задания
-                      </Button>
-                      <Button
+                        className="align-self-end"
+                        size="xs"
                         variant="outline"
                         color="red"
                         leftIcon={<TrashX />}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setDeleteDayId(day.id);
                           setDeleteDayModalOpened(true);
                         }}
                       >
                         Удалить
                       </Button>
-                    </Stack>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+                    </div>
+                  </Card>
+                );
+              })}
+          </SimpleGrid>
+          {!daysLoading && daysList.length === 0 && <Center>Список дней пуст</Center>}
+        </>
+      )}
       {daysLoading && (
         <Center>
           <Loader color="orange" variant="bars" />
         </Center>
       )}
-      {!daysLoading && daysList.length === 0 && <Center>Список дней пуст</Center>}
       <Center>{daysListError}</Center>
-      <AddDay opened={addDayModalOpened} setOpened={setAddDayModalOpened} pushDay={pushDay} courseId={courseId} />
+      {addDayModalOpened && (
+        <AddDay opened={addDayModalOpened} setOpened={setAddDayModalOpened} pushDay={pushDay} courseId={courseId} />
+      )}
+
       <DeleteDay
         opened={deleteDayModalOpened}
         setOpened={setDeleteDayModalOpened}

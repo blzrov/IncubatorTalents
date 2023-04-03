@@ -74,7 +74,7 @@ export default function Task({ task, day, course, task_status, messages }) {
   const sendMessage = (e) => {
     e.preventDefault();
     const body = new FormData();
-    body.append("message", "teadadadadxt");
+    body.append("message", "");
     if (files) {
       for (let index in files) {
         body.append(
@@ -112,7 +112,7 @@ export default function Task({ task, day, course, task_status, messages }) {
       <Container>
         <Space h="xl" />
         <Card p="lg">
-          <Card.Section style={{ position: "relative" }}>
+          <Card.Section>
             <Title
               order={1}
               weight={700}
@@ -122,12 +122,12 @@ export default function Task({ task, day, course, task_status, messages }) {
             >
               {task.name}
             </Title>
-            <Text color="orange" size="xl" weight={600} style={{}}>
+            {/* <Text color="orange" size="xl" weight={600} style={{}}>
               Статус задания
-            </Text>
+            </Text> */}
           </Card.Section>
-          <Space h="sm" />
-          {task_status === "waiting" ? (
+          {/* <Space h="sm" /> */}
+          {/* {task_status === "waiting" ? (
             <Text size="lg" weight={700} color="orange">
               Ожидаем вашего ответа
             </Text>
@@ -139,14 +139,13 @@ export default function Task({ task, day, course, task_status, messages }) {
             <Text size="lg" weight={700} color="blue">
               Начните выполнение!
             </Text>
-          )}
-          <Text
+          )} */}
+          {/* <Text
             size="sm"
             weight={500}
             style={{ color: secondaryColor, lineHeight: 1.5 }}
             dangerouslySetInnerHTML={{ __html: task.description }}
-          ></Text>
-
+          ></Text> */}
           <Space h="lg" />
           {task_status !== "empty" ? (
             <>
@@ -161,7 +160,6 @@ export default function Task({ task, day, course, task_status, messages }) {
                   </Text>
                 );
               })}
-
               <div className={styles.messages}>
                 {chat.map((message) => {
                   return (
@@ -169,7 +167,6 @@ export default function Task({ task, day, course, task_status, messages }) {
                       className={`${styles.message} ${message.answer_id ? styles.interlocutor : styles.you}`}
                       key={message.id}
                     >
-                      <Text size="sm">{message.answer_id ? "Эксперт" : "Вы"}:</Text>
                       <Text size="md" weight={500}>
                         {message.message}
                       </Text>
@@ -191,7 +188,6 @@ export default function Task({ task, day, course, task_status, messages }) {
                 <div>
                   <form onSubmit={(e) => sendMessage(e)}>
                     <div className={styles.input}>
-                      <input type="text" placeholder="Введите ваше сообщение" name="message" />
                       <button type="submit" id="send-message">
                         Отправить
                       </button>

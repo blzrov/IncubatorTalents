@@ -7,6 +7,7 @@ import {
   Input,
   Group,
   Text,
+  Tabs,
   Space,
   Button,
   useMantineTheme,
@@ -209,14 +210,33 @@ export const EditCourse = ({ opened, setOpened, updateCoursesList, editCourseId 
     <div>
       {description.length > 0 && (
         <form onSubmit={saveCourse}>
-          <Center>
-            <Button color="green" type="submit" style={{ marginRight: "20px" }}>
+          <div style={{ textAlign: "end" }}>
+            <button
+              style={{
+                fontSize: "16px",
+                color: "#1FBEAC",
+                fontWeight: "600",
+                marginRight: "35px",
+                border: "none",
+                backgroundColor: "white",
+              }}
+              type="submit"
+            >
               Сохранить
-            </Button>
-            <Button variant="light" color="dark" onClick={() => setOpened(false)}>
+            </button>
+            <button
+              style={{
+                fontSize: "16px",
+                color: "#1FBEAC",
+                fontWeight: "600",
+                border: "none",
+                backgroundColor: "white",
+              }}
+              onClick={() => setOpened(false)}
+            >
               Отменить
-            </Button>
-          </Center>
+            </button>
+          </div>
           <Row>
             <Col md={4}>
               <Dropzone
@@ -253,30 +273,36 @@ export const EditCourse = ({ opened, setOpened, updateCoursesList, editCourseId 
               </InputWrapper>
             </Col>
             <Col md={8}>
-              <MultiSelect
-                value={selectedUsers}
-                onChange={(selected) => setSelectedUsers(selected)}
-                data={users.map((el) => el.email)}
-                label="Выберите пользователей, которые должны попасть на курс"
-                placeholder="Пользователей не выбрано"
-                searchable
-                nothingFound="Пользователей не найдено"
-              />
-              <RichTextEditor
-                name="description"
-                value={description}
-                onChange={(value) => {
-                  setDescription(value);
-                }}
-                controls={[
-                  ["bold", "italic", "underline", "link"],
-                  ["unorderedList", "orderedList"],
-                  ["h1", "h2", "h3"],
-                  ["sup", "sub"],
-                  ["alignLeft", "alignCenter", "alignRight"],
-                ]}
-                style={{ height: "400px", overflow: "auto" }}
-              />
+              <Tabs unstyled color="#036459">
+                <Tabs.Tab label="Участники">
+                  <MultiSelect
+                    value={selectedUsers}
+                    onChange={(selected) => setSelectedUsers(selected)}
+                    data={users.map((el) => el.email)}
+                    label="Выберите пользователей, которые должны попасть на курс"
+                    placeholder="Пользователей не выбрано"
+                    searchable
+                    nothingFound="Пользователей не найдено"
+                  />
+                </Tabs.Tab>
+                <Tabs.Tab label="О курсе">
+                  <RichTextEditor
+                    name="description"
+                    value={description}
+                    onChange={(value) => {
+                      setDescription(value);
+                    }}
+                    controls={[
+                      ["bold", "italic", "underline", "link"],
+                      ["unorderedList", "orderedList"],
+                      ["h1", "h2", "h3"],
+                      ["sup", "sub"],
+                      ["alignLeft", "alignCenter", "alignRight"],
+                    ]}
+                    style={{ height: "400px", overflow: "auto" }}
+                  />
+                </Tabs.Tab>
+              </Tabs>
             </Col>
           </Row>
           <LoadingOverlay visible={loading} />

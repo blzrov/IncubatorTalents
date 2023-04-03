@@ -8,6 +8,7 @@ import { Button, Card, Grid } from "@mantine/core";
 import Container from "react-bootstrap/Container";
 
 export const Header = ({ user }) => {
+  if (!user?.isLoggedIn) return <></>;
   return (
     <Container>
       <Card style={{ height: "100px" }} shadow="sm" padding="lg" radius="md" withBorder>

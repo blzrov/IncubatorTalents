@@ -7,12 +7,16 @@ import {
   Group,
   Text,
   Space,
+  Tabs,
+  Card,
   Button,
   useMantineTheme,
   Center,
   LoadingOverlay,
   MultiSelect,
 } from "@mantine/core";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import RichTextEditor from "/components/RichText";
 import { nanoid } from "nanoid";
 import { showNotification } from "@mantine/notifications";
@@ -144,79 +148,101 @@ export const AddCourse = ({ opened, setOpened, pushCourse }) => {
   return (
     <div>
       <form onSubmit={saveCourse}>
-        <LoadingOverlay visible={loading} />
-        <InputWrapper
-          required
-          label="Название курса"
-          description="Название курса в свободной форме, будет отображаться в качесвте заголовка"
-          error={nameError}
-        >
-          <Input type="text" name="name" />
-        </InputWrapper>
-        <Space h="md" />
-        <RichTextEditor
-          name="description"
-          value={description}
-          onChange={(value) => {
-            setDescription(value);
-          }}
-          controls={[
-            ["bold", "italic", "underline", "link"],
-            ["unorderedList", "orderedList"],
-            ["h1", "h2", "h3"],
-            ["sup", "sub"],
-            ["alignLeft", "alignCenter", "alignRight"],
-          ]}
-          style={{ height: "400px", overflow: "auto" }}
-        />
-        <Space h="md" />
-        <MultiSelect
-          value={selectedUsers}
-          onChange={(selected) => setSelectedUsers(selected)}
-          data={users.map((el) => el.email)}
-          label="Выберите пользователей, которые должны попасть на курс"
-          placeholder="Пользователей не выбрано"
-          searchable
-          nothingFound="Пользователей не найдено"
-        />
-        <Space h="md" />
-        <Dropzone
-          onDrop={(files) => {
-            setImage(files[0]);
-            setCreateObjectURL(URL.createObjectURL(files[0]));
-          }}
-          onReject={() => {
-            showNotification({
-              title: "Файл отклонен",
-              autoClose: 3500,
-              color: "red",
-              icon: <X size={18} />,
-            });
-          }}
-          maxSize={3 * 1024 ** 2}
-          accept={IMAGE_MIME_TYPE}
-          padding="xs"
-        >
-          {(status) => dropzoneChildren(status, theme)}
-        </Dropzone>
-        <Space h="md" />
-        <Center>
-          <Button color="green" type="submit" style={{ marginRight: "20px" }}>
-            Добавить
-          </Button>
-          <Button
-            variant="light"
-            color="dark"
-            onClick={() => {
-              setOpened(false);
+        <div style={{ textAlign: "end" }}>
+          <button
+            style={{
+              fontSize: "16px",
+              color: "#1FBEAC",
+              fontWeight: "600",
+              marginRight: "35px",
+              border: "none",
+              backgroundColor: "white",
             }}
+            color="green"
+            type="submit"
+          >
+            Сохранить
+          </button>
+          <button
+            style={{
+              fontSize: "16px",
+              color: "#1FBEAC",
+              fontWeight: "600",
+              border: "none",
+              backgroundColor: "white",
+            }}
+            onClick={() => setOpened(false)}
           >
             Отменить
-          </Button>
-        </Center>
+          </button>
+        </div>
         <Center>
           <Text color="red">{addError}</Text>
         </Center>
+        <Row>
+          <Col md={4}>
+            <Dropzone
+              onDrop={(files) => {
+                setImage(files[0]);
+                setCreateObjectURL(URL.createObjectURL(files[0]));
+              }}
+              onReject={() => {
+                showNotification({
+                  title: "Файл отклонен",
+                  autoClose: 3500,
+                  color: "red",
+                  icon: <X size={18} />,
+                });
+              }}
+              maxSize={3 * 1024 ** 2}
+              accept={IMAGE_MIME_TYPE}
+              padding="xs"
+            >
+              {(status) => dropzoneChildren(status, theme)}
+            </Dropzone>
+            <InputWrapper
+              required
+              label="Название курса"
+              description="Название курса в свободной форме, будет отображаться в качесвте заголовка"
+              error={nameError}
+            >
+              <Input type="text" name="name" />
+            </InputWrapper>
+          </Col>
+          <Col md={8}>
+            <Tabs unstyled color="#036459">
+              <Tabs.Tab label="Участники">
+                <MultiSelect
+                  value={selectedUsers}
+                  onChange={(selected) => setSelectedUsers(selected)}
+                  data={users.map((el) => el.email)}
+                  label="Выберите пользователей, которые должны попасть на курс"
+                  placeholder="Пользователей не выбрано"
+                  searchable
+                  nothingFound="Пользователей не найдено"
+                />
+              </Tabs.Tab>
+              <Tabs.Tab label="О курсе">
+                <RichTextEditor
+                  name="description"
+                  value={description}
+                  onChange={(value) => {
+                    setDescription(value);
+                  }}
+                  controls={[
+                    ["bold", "italic", "underline", "link"],
+                    ["unorderedList", "orderedList"],
+                    ["h1", "h2", "h3"],
+                    ["sup", "sub"],
+                    ["alignLeft", "alignCenter", "alignRight"],
+                  ]}
+                  style={{ height: "400px", overflow: "auto" }}
+                />
+              </Tabs.Tab>
+            </Tabs>
+          </Col>
+        </Row>
+        <LoadingOverlay visible={loading} />
       </form>
     </div>
   );

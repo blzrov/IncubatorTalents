@@ -62,17 +62,22 @@ export const CoursesControl = () => {
   return (
     <Container>
       <Space h="xl" />
-      <div className="d-flex align-items-center">
-        <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Курсы</div>{" "}
-        {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
-          <FolderPlus
-            style={{ cursor: "pointer", marginLeft: "45px" }}
-            size={32}
-            color="#1FBEAC"
-            onClick={() => setAddCourseModalOpened(true)}
-          />
-        )}
-      </div>
+      {!daysModalOpened && (
+        <div className="d-flex align-items-center">
+          <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>
+            Курсы{addCourseModalOpened && " > Добавление курса"}
+            {editCourseModalOpened && " > Редактирование курса"}
+          </div>{" "}
+          {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
+            <FolderPlus
+              style={{ cursor: "pointer", marginLeft: "45px" }}
+              size={32}
+              color="#1FBEAC"
+              onClick={() => setAddCourseModalOpened(true)}
+            />
+          )}
+        </div>
+      )}
       <Space h="xl" />
       {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
         <Main
