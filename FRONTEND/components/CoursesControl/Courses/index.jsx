@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "/utils/rest";
 
 import { Space, Loader, Title, Button, Center, Table, Stack } from "@mantine/core";
-import { Plus, TrashX, Edit, ListNumbers, List } from "tabler-icons-react";
+import { Plus, TrashX, Edit, ListNumbers, List, FolderPlus } from "tabler-icons-react";
 import Container from "react-bootstrap/Container";
 
 import { AddCourse } from "./addCourse";
@@ -60,8 +60,19 @@ export const CoursesControl = () => {
   };
 
   return (
-    <Container style={{ width: "100%" }}>
-      <Title order={2}>Курсы</Title>
+    <Container>
+      <Space h="xl" />
+      <div className="d-flex align-items-center">
+        <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Курсы</div>{" "}
+        {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
+          <FolderPlus
+            style={{ cursor: "pointer", marginLeft: "45px" }}
+            size={32}
+            color="#1FBEAC"
+            onClick={() => setAddCourseModalOpened(true)}
+          />
+        )}
+      </div>
       <Space h="xl" />
       {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
         <Main

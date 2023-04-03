@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { sessionOptions } from "/lib/session";
 import { withIronSessionSsr } from "iron-session/next";
@@ -9,7 +8,19 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import axios from "/utils/rest";
 
-import { Text, Space, SimpleGrid, Card, Group, Button, useMantineTheme, Progress, Tabs, Title } from "@mantine/core";
+import {
+  Text,
+  Space,
+  SimpleGrid,
+  Card,
+  Image,
+  Group,
+  Button,
+  useMantineTheme,
+  Progress,
+  Tabs,
+  Title,
+} from "@mantine/core";
 
 export default function Days({ course, days, tasks, tasks_ready }) {
   const theme = useMantineTheme();
@@ -25,12 +36,38 @@ export default function Days({ course, days, tasks, tasks_ready }) {
       </Head>
       <Container>
         <Space h="xl" />
+        <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>
+          Курсы &gt; <span style={{ fontSize: "14px" }}>{course.name}</span>
+        </div>
+        <Space h="xl" />
         <Row>
           <Col md={4}>
-            {course.image && <Image src={"/" + course.image} width={1200} height={550} alt="Инкубатор талантов" />}
-            <div>{course.name}</div>
-            <div>Прогресс</div>
-            <Progress color="orange" size="lg" value={(tasks_ready / tasks) * 100} style={{ zIndex: "12" }} />
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              style={{ textAlign: "center", paddingBottom: "40px", marginBottom: "40px" }}
+            >
+              <div style={{ margin: "0 auto", width: "145px", marginBottom: "20px" }}>
+                {course.image && (
+                  <Image radius={100} src={"/" + course.image} width={145} height={145} alt="Инкубатор талантов" />
+                )}
+              </div>
+              <div style={{ fontSize: "20px", fontWeight: "400", color: "#036459" }}>{course.name}</div>
+            </Card>
+            <div style={{ fontSize: "20px", fontWeight: "600", color: "#036459", marginBottom: "16px" }}>
+              Мой прогресс
+            </div>
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              style={{ textAlign: "center", paddingBottom: "40px" }}
+            >
+              <Progress color="#1FBEAC" size="lg" value={(tasks_ready / tasks) * 100} style={{ zIndex: "12" }} />
+            </Card>
           </Col>
           <Col md={8}>
             <Tabs unstyled color="#036459">
@@ -41,17 +78,18 @@ export default function Days({ course, days, tasks, tasks_ready }) {
                       return (
                         <Link passHref href={`/courses/${course.id}/days/${day.id}`}>
                           <Card p="lg" shadow="sm" padding="lg" radius="md" withBorder style={{ cursor: "pointer" }}>
-                            <Card.Section>
-                              {day.image && (
-                                <Image src={"/" + day.image} width={36} height={36} alt="Инкубатор талантов" />
-                              )}
-                            </Card.Section>
-
-                            <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                              <Text size="lg" weight={600} color="#036459">
-                                {day.name}
-                              </Text>
-                            </Group>
+                            <div style={{ height: "165px" }}>
+                              <Card.Section>
+                                {day.image && (
+                                  <Image src={"/" + day.image} width={36} height={36} alt="Инкубатор талантов" />
+                                )}
+                              </Card.Section>
+                              <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
+                                <Text size="lg" weight={600} color="#036459">
+                                  {day.name}
+                                </Text>
+                              </Group>
+                            </div>
                           </Card>
                         </Link>
                       );
@@ -62,12 +100,14 @@ export default function Days({ course, days, tasks, tasks_ready }) {
                 </SimpleGrid>
               </Tabs.Tab>
               <Tabs.Tab label="О курсе">
-                <Text
-                  size="sm"
-                  weight={500}
-                  style={{ color: secondaryColor, lineHeight: 1.5 }}
-                  dangerouslySetInnerHTML={{ __html: course.description }}
-                ></Text>
+                <Card shadow="sm" padding="lg" radius="md" withBorder>
+                  <Text
+                    size="sm"
+                    weight={500}
+                    style={{ color: secondaryColor, lineHeight: 1.5 }}
+                    dangerouslySetInnerHTML={{ __html: course.description }}
+                  ></Text>
+                </Card>
               </Tabs.Tab>
             </Tabs>
           </Col>

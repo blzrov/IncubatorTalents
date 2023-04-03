@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import axios from "/utils/rest";
 import Container from "react-bootstrap/Container";
 
-import { Text, Space, Card, Group, Center, Button, useMantineTheme, Progress, Title } from "@mantine/core";
+import { Text, Space, Card, Group, Center, Tabs, Button, useMantineTheme, Progress, Title } from "@mantine/core";
 
 export default function Tasks({ course, day, tasks, tasks_ready }) {
   const theme = useMantineTheme();
@@ -24,6 +24,14 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
+        <Space h="xl" />
+        <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>
+          Курсы &gt;{" "}
+          <span style={{ fontSize: "14px" }}>
+            {course.name} &gt; {day.name}
+          </span>
+        </div>
+        <Space h="xl" />
         <Row>
           <Col md={4}>
             <Card.Section style={{ position: "relative" }}>
@@ -47,57 +55,58 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
               >
                 {day.name}
               </Title>
-              <Text
-                color="orange"
-                size="xl"
-                weight={600}
-                style={{
-                  position: "absolute",
-                  bottom: "15px",
-                  left: "20px",
-                  zIndex: "10",
-                  filter: "drop-shadow(0px 0px 4px #333)",
-                }}
-              >
+              <Text color="orange" size="xl" weight={600} style={{}}>
                 Прогресс
               </Text>
             </Card.Section>
-            <Progress color="orange" size="lg" value={(tasks_ready / tasks.length) * 100} style={{ zIndex: "12" }} />
+            <Progress color="#1FBEAC" size="lg" value={(tasks_ready / tasks.length) * 100} style={{ zIndex: "12" }} />
           </Col>
           <Col md={8}>
-            <div style={{ fontWeight: "600", fontSize: "20px", color: "#036459" }}>
-              Посмотрите видео и выполните задания
-            </div>
-            <Center>
-              <iframe
-                width={700}
-                height={400}
-                src={day.video}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </Center>
-            {tasks.map((task) => {
-              return (
-                <Card p="lg" key={task.id} style={{ boxShadow: "0 0 12px #999", marginBottom: "20px" }}>
-                  <Card.Section>
-                    {task.image && <Image src={"/" + task.image} width={300} height={120} alt="Инкубатор талантов" />}
-                  </Card.Section>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Tabs unstyled color="#036459">
+                <Tabs.Tab label="Видео">
+                  <div style={{ fontWeight: "600", fontSize: "20px", color: "#036459", margin: "30px 0" }}>
+                    Посмотрите видео и выполните задания
+                  </div>
+                  <Card shadow="sm" padding="lg" radius="md" withBorder>
+                    <Center>
+                      <iframe
+                        width={700}
+                        height={400}
+                        src={day.video}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </Center>
+                  </Card>
+                </Tabs.Tab>
+                <Tabs.Tab label="Задания">
+                  {tasks.map((task) => {
+                    return (
+                      <Card p="lg" key={task.id} style={{ boxShadow: "0 0 12px #999", marginBottom: "20px" }}>
+                        <Card.Section>
+                          {task.image && (
+                            <Image src={"/" + task.image} width={300} height={120} alt="Инкубатор талантов" />
+                          )}
+                        </Card.Section>
 
-                  <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                    <Text size="lg" weight={700} color="orange">
-                      {task.name}
-                    </Text>
-                  </Group>
-                  <Link passHref href={`/courses/${course.id}/days/${day.id}/tasks/${task.id}`}>
-                    <Button color="green" fullWidth style={{ marginTop: 14 }}>
-                      Открыть задание
-                    </Button>
-                  </Link>
-                </Card>
-              );
-            })}
+                        <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
+                          <Text size="lg" weight={700} color="orange">
+                            {task.name}
+                          </Text>
+                        </Group>
+                        <Link passHref href={`/courses/${course.id}/days/${day.id}/tasks/${task.id}`}>
+                          <Button color="green" fullWidth style={{ marginTop: 14 }}>
+                            Открыть задание
+                          </Button>
+                        </Link>
+                      </Card>
+                    );
+                  })}
+                </Tabs.Tab>
+              </Tabs>
+            </Card>
           </Col>
         </Row>
         <Card p="lg">

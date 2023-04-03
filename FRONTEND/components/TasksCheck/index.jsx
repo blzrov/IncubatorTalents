@@ -47,7 +47,8 @@ export const TasksCheck = () => {
 
   return (
     <Container>
-      <Title order={2}>Проверка заданий</Title>
+      <Space h="xl" />
+      <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Проверка заданий</div>
       <Space h="xl" />
       <Row>
         <Col md={4}>

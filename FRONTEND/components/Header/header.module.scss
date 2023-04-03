@@ -3,12 +3,13 @@
   width: 100%;
   margin: 0;
   margin-bottom: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .menu {
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    text-align: end;
 
     a {
       color: #036459;

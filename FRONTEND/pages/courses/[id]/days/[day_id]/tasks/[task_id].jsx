@@ -74,10 +74,9 @@ export default function Task({ task, day, course, task_status, messages }) {
   const sendMessage = (e) => {
     e.preventDefault();
     const body = new FormData();
-    body.append("message", "e.target.message.value");
+    body.append("message", "teadadadadxt");
     if (files) {
       for (let index in files) {
-        console.log(files[index].path);
         body.append(
           `file_${index}`,
           files[index],
@@ -192,6 +191,7 @@ export default function Task({ task, day, course, task_status, messages }) {
                 <div>
                   <form onSubmit={(e) => sendMessage(e)}>
                     <div className={styles.input}>
+                      <input type="text" placeholder="Введите ваше сообщение" name="message" />
                       <button type="submit" id="send-message">
                         Отправить
                       </button>

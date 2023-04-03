@@ -16,9 +16,6 @@ export const Main = ({
 }) => {
   return (
     <div>
-      <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setAddCourseModalOpened(true)}>
-        Добавить курс
-      </Button>
       <Space h="xl" />
       <Table verticalSpacing="sm" striped highlightOnHover>
         <thead>

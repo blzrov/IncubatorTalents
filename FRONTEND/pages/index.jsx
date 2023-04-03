@@ -21,9 +21,7 @@ export default function Home({ courses }) {
       </Head>
       <Container>
         <Space h="xl" />
-        <Text size="xl" weight={700} color="#036459" transform="uppercase">
-          Мои курсы
-        </Text>
+        <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Мои курсы</div>
         <Space h="lg" />
         <SimpleGrid cols={3}>
           {courses.map(({ course, tasks, tasks_ready }) => {

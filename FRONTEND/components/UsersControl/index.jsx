@@ -56,8 +56,9 @@ export const UsersControl = () => {
   }, []);
 
   return (
-    <Container style={{ width: "100%" }}>
-      <Title order={2}>Управление пользователями</Title>
+    <Container>
+      <Space h="xl" />
+      <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Управление пользователями</div>
       <Space h="xl" />
       <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setAddUserModalOpened(true)}>
         Добавить пользователя

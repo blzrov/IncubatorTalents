@@ -18,9 +18,7 @@ const Account = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container size="md" px="md" style={{ paddingTop: "30px", paddingBottom: "30px" }}>
-        {user && user.status === "admin" && <TasksCheck />}
-      </Container>
+      <Container>{user && user.status === "admin" && <TasksCheck />}</Container>
     </div>
   );
 };
