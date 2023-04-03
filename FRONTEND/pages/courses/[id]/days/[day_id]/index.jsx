@@ -89,7 +89,7 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
                         </Card.Section>
 
                         <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                          <Text size="lg" weight={700} color="orange">
+                          <Text size="lg" weight={700} color="#036459">
                             {task.name}
                           </Text>
                         </Group>
