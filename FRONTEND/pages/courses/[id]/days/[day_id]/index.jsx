@@ -65,6 +65,9 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
             <Progress color="orange" size="lg" value={(tasks_ready / tasks.length) * 100} style={{ zIndex: "12" }} />
           </Col>
           <Col md={8}>
+            <div style={{ fontWeight: "600", fontSize: "20px", color: "#036459" }}>
+              Посмотрите видео и выполните задания
+            </div>
             <Center>
               <iframe
                 width={700}

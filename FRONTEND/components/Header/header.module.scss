@@ -1,15 +1,18 @@
 .header {
-  height: 60px;
+  height: 77px;
   width: 100%;
   margin: 0;
+  margin-bottom: 55px;
 
   .menu {
     display: flex;
     align-items: center;
     padding: 0 20px;
+    text-align: end;
 
     a {
       color: #036459;
+      text-decoration: none;
       margin: 0 10px;
       font-size: 18px;
       font-weight: 500;

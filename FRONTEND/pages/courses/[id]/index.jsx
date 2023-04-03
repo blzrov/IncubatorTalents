@@ -1,7 +1,7 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-
 import { sessionOptions } from "/lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import Row from "react-bootstrap/Row";
@@ -9,11 +9,11 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import axios from "/utils/rest";
 
-import { Text, Space, Card, Group, Button, useMantineTheme, Progress, Title } from "@mantine/core";
+import { Text, Space, SimpleGrid, Card, Group, Button, useMantineTheme, Progress, Tabs, Title } from "@mantine/core";
 
 export default function Days({ course, days, tasks, tasks_ready }) {
   const theme = useMantineTheme();
-
+  const [activeTab, setActiveTab] = useState("first");
   const secondaryColor = theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[7];
 
   return (
@@ -33,36 +33,43 @@ export default function Days({ course, days, tasks, tasks_ready }) {
             <Progress color="orange" size="lg" value={(tasks_ready / tasks) * 100} style={{ zIndex: "12" }} />
           </Col>
           <Col md={8}>
-            {days.map((day, index) => {
-              if (!days[index - 1] || days[index - 1].show_day) {
-                return (
-                  <Card p="lg" key={day.id} style={{ boxShadow: "0 0 12px #999", marginBottom: "20px" }}>
-                    <Card.Section>
-                      {day.image && <Image src={"/" + day.image} width={300} height={120} alt="Инкубатор талантов" />}
-                    </Card.Section>
+            <Tabs unstyled color="#036459">
+              <Tabs.Tab label="Материалы курса">
+                <SimpleGrid cols={3}>
+                  {days.map((day, index) => {
+                    if (!days[index - 1] || days[index - 1].show_day) {
+                      return (
+                        <Link passHref href={`/courses/${course.id}/days/${day.id}`}>
+                          <Card p="lg" shadow="sm" padding="lg" radius="md" withBorder style={{ cursor: "pointer" }}>
+                            <Card.Section>
+                              {day.image && (
+                                <Image src={"/" + day.image} width={36} height={36} alt="Инкубатор талантов" />
+                              )}
+                            </Card.Section>
 
-                    <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
-                      <Text size="lg" weight={700} color="orange">
-                        {day.name}
-                      </Text>
-                    </Group>
-                    <Link passHref href={`/courses/${course.id}/days/${day.id}`}>
-                      <Button color="green" fullWidth style={{ marginTop: 14 }}>
-                        Открыть день
-                      </Button>
-                    </Link>
-                  </Card>
-                );
-              } else {
-                return <div key={day.id}></div>;
-              }
-            })}
-            <Text
-              size="sm"
-              weight={500}
-              style={{ color: secondaryColor, lineHeight: 1.5 }}
-              dangerouslySetInnerHTML={{ __html: course.description }}
-            ></Text>
+                            <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
+                              <Text size="lg" weight={600} color="#036459">
+                                {day.name}
+                              </Text>
+                            </Group>
+                          </Card>
+                        </Link>
+                      );
+                    } else {
+                      return <div key={day.id}></div>;
+                    }
+                  })}
+                </SimpleGrid>
+              </Tabs.Tab>
+              <Tabs.Tab label="О курсе">
+                <Text
+                  size="sm"
+                  weight={500}
+                  style={{ color: secondaryColor, lineHeight: 1.5 }}
+                  dangerouslySetInnerHTML={{ __html: course.description }}
+                ></Text>
+              </Tabs.Tab>
+            </Tabs>
           </Col>
         </Row>
       </Container>
