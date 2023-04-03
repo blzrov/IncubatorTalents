@@ -1,146 +1,152 @@
-import { useState, useEffect } from 'react';
-import axios from '/utils/rest';
+import { useState, useEffect } from "react";
+import axios from "/utils/rest";
 
-import { Space, Loader, Title, Button, Center, Container, Table, Stack } from '@mantine/core';
-import { Plus, TrashX, Edit, ListNumbers, List } from 'tabler-icons-react';
+import { Space, Loader, Title, Button, Center, Table, Stack } from "@mantine/core";
+import { Plus, TrashX, Edit, ListNumbers, List } from "tabler-icons-react";
+import Container from "react-bootstrap/Container";
 
-import { AddCourse } from './addCourse';
-import { DeleteCourse } from './deleteCourse';
-import { EditCourse } from './editCourse';
-import { Days } from '../Days';
+import { AddCourse } from "./addCourse";
+import { DeleteCourse } from "./deleteCourse";
+import { EditCourse } from "./editCourse";
+import { Days } from "../Days";
 
 export const CoursesControl = () => {
-	const [addCourseModalOpened, setAddCourseModalOpened] = useState(false);
-	const [deleteCourseModalOpened, setDeleteCourseModalOpened] = useState(false);
-	const [editCourseModalOpened, setEditCourseModalOpened] = useState(false);
-	const [daysModalOpened, setDaysModalOpened] = useState(false);
+  const [addCourseModalOpened, setAddCourseModalOpened] = useState(false);
+  const [deleteCourseModalOpened, setDeleteCourseModalOpened] = useState(false);
+  const [editCourseModalOpened, setEditCourseModalOpened] = useState(false);
+  const [daysModalOpened, setDaysModalOpened] = useState(false);
 
-	const [deleteCourseId, setDeleteCourseId] = useState(-1);
-	const [editCourseId, setEditCourseId] = useState(-1);
-	const [courseId, setCourseId] = useState(-1);
+  const [deleteCourseId, setDeleteCourseId] = useState(-1);
+  const [editCourseId, setEditCourseId] = useState(-1);
+  const [courseId, setCourseId] = useState(-1);
 
-	const [coursesLoading, setCoursesLoading] = useState(true);
-	const [coursesList, setCoursesList] = useState([]);
-	const [coursesListError, setCoursesListError] = useState('');
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [coursesList, setCoursesList] = useState([]);
+  const [coursesListError, setCoursesListError] = useState("");
 
-	useEffect(() => {
-		axios.get('/courses')
-			.then(res => {
-				setCoursesList(res.data);
-			})
-			.catch(error => {
-				setCoursesListError('Ошибка получения списка курсов')
-			})
-			.finally(() => {
-				setCoursesLoading(false);
-			});
-	}, []);
+  useEffect(() => {
+    axios
+      .get("/courses")
+      .then((res) => {
+        setCoursesList(res.data);
+      })
+      .catch((error) => {
+        setCoursesListError("Ошибка получения списка курсов");
+      })
+      .finally(() => {
+        setCoursesLoading(false);
+      });
+  }, []);
 
-	const pushCourse = (course) => {
-		setCoursesList([course, ...coursesList]);
-	}
+  const pushCourse = (course) => {
+    setCoursesList([course, ...coursesList]);
+  };
 
-	const removeCourse = (id) => {
-		const delete_index = coursesList.findIndex(course => course.id === id);
-		if (delete_index !== -1) {
-			coursesList.splice(delete_index, 1)
-			setCoursesList(coursesList);
-		}
-	}
+  const removeCourse = (id) => {
+    const delete_index = coursesList.findIndex((course) => course.id === id);
+    if (delete_index !== -1) {
+      coursesList.splice(delete_index, 1);
+      setCoursesList(coursesList);
+    }
+  };
 
-	const updateCourse = (updatedCourse) => {
-		const update_index = coursesList.findIndex(course => course.id === updatedCourse.id);
-		if (update_index !== -1) {
-			coursesList[update_index] = updatedCourse;
-			setCoursesList(coursesList);
-		}
-	}
+  const updateCourse = (updatedCourse) => {
+    const update_index = coursesList.findIndex((course) => course.id === updatedCourse.id);
+    if (update_index !== -1) {
+      coursesList[update_index] = updatedCourse;
+      setCoursesList(coursesList);
+    }
+  };
 
-	return (
-		<Container style={{ width: '100%' }}>
-			<Title order={2}>
-				Управление курсами
-			</Title>
-			<Space h="xl" />
-			<Button
-				leftIcon={<Plus />}
-				variant="light"
-				color="green"
-				onClick={() => setAddCourseModalOpened(true)}
-			>
-				Добавить курс
-			</Button>
-			<Space h="xl" />
-			<Title order={3} style={{ fontWeight: 400 }}>
-				Существующие курсы
-			</Title>
-			<Table verticalSpacing="sm" striped highlightOnHover>
-				<thead>
-					<tr>
-						<th>Название</th>
-						{/* <th>Описание</th> */}
-						<th>Количество дней</th>
-						<th>Количество участников</th>
-						<th>Действия</th>
-					</tr>
-				</thead>
-				<tbody>
-					{!coursesLoading && coursesList.map(course => {
-						return <tr key={course.id}>
-							<td>{course.name}</td>
-							{/* <td>{course.description || 'Нет описания' }</td> */}
-							<td>{course.days}</td>
-							<td>{course.selected_users}</td>
-							<td>
-								<Stack>
-									<Button
-										variant="outline"
-										color="orange"
-										leftIcon={<List />}
-										onClick={() => {
-											setCourseId(course.id);
-											setDaysModalOpened(true);
-										}}
-									>
-										Дни
-									</Button>
-									<Button
-										variant="outline"
-										color="blue"
-										leftIcon={<Edit />}
-										onClick={() => {
-											setEditCourseId(course.id);
-											setEditCourseModalOpened(true);
-										}}
-									>
-										Редактировать
-									</Button>
-									<Button
-										variant="outline"
-										color="red"
-										leftIcon={<TrashX />}
-										onClick={() => {
-											setDeleteCourseId(course.id);
-											setDeleteCourseModalOpened(true);
-										}}
-									>
-										Удалить
-									</Button>
-								</Stack>
-							</td>
-						</tr>
-					})}
-				</tbody>
-			</Table>
-			{coursesLoading && <Center><Loader color="orange" variant="bars" /></Center>}
-			{(!coursesLoading && coursesList.length === 0) && <Center>Список курсов пуст</Center>}
-			<Center>
-				{coursesListError}
-			</Center>
-			<AddCourse opened={addCourseModalOpened} setOpened={setAddCourseModalOpened} pushCourse={pushCourse} />
-			<DeleteCourse opened={deleteCourseModalOpened} setOpened={setDeleteCourseModalOpened} removeCourse={removeCourse} deleteCourseId={deleteCourseId} />
-			<EditCourse opened={editCourseModalOpened} setOpened={setEditCourseModalOpened} updateCoursesList={updateCourse} editCourseId={editCourseId} />
-			<Days opened={daysModalOpened} setOpened={setDaysModalOpened} courseId={courseId} />
-		</Container>
-	)
-}
+  return (
+    <Container style={{ width: "100%" }}>
+      <Title order={2}>Курсы</Title>
+      <Space h="xl" />
+      <Button leftIcon={<Plus />} variant="light" color="green" onClick={() => setAddCourseModalOpened(true)}>
+        Добавить курс
+      </Button>
+      <Space h="xl" />
+      <Table verticalSpacing="sm" striped highlightOnHover>
+        <thead>
+          <tr>
+            <th>Название</th>
+            {/* <th>Описание</th> */}
+            <th>Количество дней</th>
+            <th>Количество участников</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!coursesLoading &&
+            coursesList.map((course) => {
+              return (
+                <tr key={course.id}>
+                  <td>{course.name}</td>
+                  <td>{course.days}</td>
+                  <td>{course.selected_users}</td>
+                  <td>
+                    <Stack>
+                      <Button
+                        variant="outline"
+                        color="orange"
+                        leftIcon={<List />}
+                        onClick={() => {
+                          setCourseId(course.id);
+                          setDaysModalOpened(true);
+                        }}
+                      >
+                        Дни
+                      </Button>
+                      <Button
+                        variant="outline"
+                        color="blue"
+                        leftIcon={<Edit />}
+                        onClick={() => {
+                          setEditCourseId(course.id);
+                          setEditCourseModalOpened(true);
+                        }}
+                      >
+                        Редактировать
+                      </Button>
+                      <Button
+                        variant="outline"
+                        color="red"
+                        leftIcon={<TrashX />}
+                        onClick={() => {
+                          setDeleteCourseId(course.id);
+                          setDeleteCourseModalOpened(true);
+                        }}
+                      >
+                        Удалить
+                      </Button>
+                    </Stack>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </Table>
+      {coursesLoading && (
+        <Center>
+          <Loader color="orange" variant="bars" />
+        </Center>
+      )}
+      {!coursesLoading && coursesList.length === 0 && <Center>Список курсов пуст</Center>}
+      <Center>{coursesListError}</Center>
+      <AddCourse opened={addCourseModalOpened} setOpened={setAddCourseModalOpened} pushCourse={pushCourse} />
+      <DeleteCourse
+        opened={deleteCourseModalOpened}
+        setOpened={setDeleteCourseModalOpened}
+        removeCourse={removeCourse}
+        deleteCourseId={deleteCourseId}
+      />
+      <EditCourse
+        opened={editCourseModalOpened}
+        setOpened={setEditCourseModalOpened}
+        updateCoursesList={updateCourse}
+        editCourseId={editCourseId}
+      />
+      <Days opened={daysModalOpened} setOpened={setDaysModalOpened} courseId={courseId} />
+    </Container>
+  );
+};

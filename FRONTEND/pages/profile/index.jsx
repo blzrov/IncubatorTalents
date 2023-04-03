@@ -1,9 +1,8 @@
 import Head from "next/head";
-import styles from "./account.module.scss";
+import styles from "../account/account.module.scss";
 
 import useUser from "/lib/useUser.js";
-import { CoursesControl } from "/components/CoursesControl/Courses";
-
+import { MyAccount } from "/components/MyAccount";
 import Container from "react-bootstrap/Container";
 
 const Account = () => {
@@ -20,7 +19,7 @@ const Account = () => {
       </Head>
 
       <Container size="md" px="md" style={{ paddingTop: "30px", paddingBottom: "30px" }}>
-        {user && user.status === "admin" && <CoursesControl />}
+        <MyAccount user={user} />
       </Container>
     </div>
   );

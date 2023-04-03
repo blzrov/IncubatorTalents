@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import '../styles/globals.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import useUser from '/lib/useUser.js';
 import { Header } from '/components/Header';

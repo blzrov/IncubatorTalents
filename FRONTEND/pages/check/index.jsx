@@ -1,9 +1,8 @@
 import Head from "next/head";
-import styles from "./account.module.scss";
+import styles from "../account/account.module.scss";
 
 import useUser from "/lib/useUser.js";
-import { CoursesControl } from "/components/CoursesControl/Courses";
-
+import { TasksCheck } from "/components/TasksCheck";
 import Container from "react-bootstrap/Container";
 
 const Account = () => {
@@ -14,13 +13,13 @@ const Account = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Личный кабинет - Инкубатор талантов</title>
+        <title>Проверка заданий</title>
         <meta name="description" content="Инкубатор талантов" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Container size="md" px="md" style={{ paddingTop: "30px", paddingBottom: "30px" }}>
-        {user && user.status === "admin" && <CoursesControl />}
+        {user && user.status === "admin" && <TasksCheck />}
       </Container>
     </div>
   );
