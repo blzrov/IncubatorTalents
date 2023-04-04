@@ -17,6 +17,7 @@ import {
   MultiSelect,
 } from "@mantine/core";
 import RichTextEditor from "/components/RichText";
+import { Days } from "../Days";
 import { nanoid } from "nanoid";
 import { showNotification } from "@mantine/notifications";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
@@ -306,6 +307,7 @@ export const EditCourse = ({ opened, setOpened, updateCoursesList, editCourseId 
           </Center>
         </form>
       )}
+      <Days opened={editCourseId} courseId={editCourseId} />
     </div>
   );
 };

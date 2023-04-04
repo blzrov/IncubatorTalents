@@ -38,17 +38,6 @@ export const Main = ({
                     <Stack>
                       <Button
                         variant="outline"
-                        color="orange"
-                        leftIcon={<List />}
-                        onClick={() => {
-                          setCourseId(course.id);
-                          setDaysModalOpened(true);
-                        }}
-                      >
-                        Дни
-                      </Button>
-                      <Button
-                        variant="outline"
                         color="blue"
                         leftIcon={<Edit />}
                         onClick={() => {

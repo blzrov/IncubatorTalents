@@ -110,7 +110,6 @@ export const CoursesControl = () => {
           editCourseId={editCourseId}
         />
       )}
-      {daysModalOpened && <Days opened={daysModalOpened} setOpened={setDaysModalOpened} courseId={courseId} />}
     </Container>
   );
 };

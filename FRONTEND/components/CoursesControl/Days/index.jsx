@@ -66,11 +66,8 @@ export const Days = ({ opened, setOpened, courseId }) => {
 
   return (
     <div>
-      {!addDayModalOpened && (
-        <Button variant="light" color="green" onClick={() => setOpened(false)}>
-          Назад
-        </Button>
-      )}
+      <Space h="sm" />
+      <div style={{ color: "#036459", fontSize: "20px", fontWeight: "600" }}>Материалы</div>
       <Space h="sm" />
       {!addDayModalOpened && ( //!addDayModalOpened && !tasksModalOpened
         <>
@@ -139,7 +136,6 @@ export const Days = ({ opened, setOpened, courseId }) => {
       {addDayModalOpened && (
         <AddDay opened={addDayModalOpened} setOpened={setAddDayModalOpened} pushDay={pushDay} courseId={courseId} />
       )}
-
       <DeleteDay
         opened={deleteDayModalOpened}
         setOpened={setDeleteDayModalOpened}

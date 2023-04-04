@@ -88,9 +88,6 @@ export const AddCourse = ({ opened, setOpened, pushCourse }) => {
         <Text size="xl" inline>
           Переместите фото сюда
         </Text>
-        <Text size="sm" color="dimmed" inline mt={7}>
-          Файл размером не более 5 мегабайт
-        </Text>
       </div>
     </Group>
   );
