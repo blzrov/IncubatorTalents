@@ -181,33 +181,30 @@ export const AddCourse = ({ opened, setOpened, pushCourse }) => {
         </Center>
         <Row>
           <Col md={4}>
-            <Dropzone
-              onDrop={(files) => {
-                setImage(files[0]);
-                setCreateObjectURL(URL.createObjectURL(files[0]));
-              }}
-              onReject={() => {
-                showNotification({
-                  title: "Файл отклонен",
-                  autoClose: 3500,
-                  color: "red",
-                  icon: <X size={18} />,
-                });
-              }}
-              maxSize={3 * 1024 ** 2}
-              accept={IMAGE_MIME_TYPE}
-              padding="xs"
-            >
-              {(status) => dropzoneChildren(status, theme)}
-            </Dropzone>
-            <InputWrapper
-              required
-              label="Название курса"
-              description="Название курса в свободной форме, будет отображаться в качесвте заголовка"
-              error={nameError}
-            >
-              <Input type="text" name="name" />
-            </InputWrapper>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Dropzone
+                onDrop={(files) => {
+                  setImage(files[0]);
+                  setCreateObjectURL(URL.createObjectURL(files[0]));
+                }}
+                onReject={() => {
+                  showNotification({
+                    title: "Файл отклонен",
+                    autoClose: 3500,
+                    color: "red",
+                    icon: <X size={18} />,
+                  });
+                }}
+                maxSize={3 * 1024 ** 2}
+                accept={IMAGE_MIME_TYPE}
+                padding="xs"
+              >
+                {(status) => dropzoneChildren(status, theme)}
+              </Dropzone>
+              <InputWrapper required label="Название курса" error={nameError}>
+                <Input type="text" name="name" />
+              </InputWrapper>
+            </Card>
           </Col>
           <Col md={8}>
             <Tabs unstyled color="#036459">

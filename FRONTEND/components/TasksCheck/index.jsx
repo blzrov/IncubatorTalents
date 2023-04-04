@@ -116,7 +116,7 @@ export const TasksCheck = () => {
                             setAnswerModalOpened(true);
                           }}
                         >
-                          Ответить
+                          Просмотреть
                         </Button>
                       </Center>
                     </td>

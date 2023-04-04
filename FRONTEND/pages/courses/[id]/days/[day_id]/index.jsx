@@ -9,7 +9,19 @@ import Col from "react-bootstrap/Col";
 import axios from "/utils/rest";
 import Container from "react-bootstrap/Container";
 
-import { Text, Space, Card, Group, Center, Tabs, Button, useMantineTheme, Progress, Title } from "@mantine/core";
+import {
+  Text,
+  Space,
+  Card,
+  RingProgress,
+  Group,
+  Center,
+  Tabs,
+  Button,
+  useMantineTheme,
+  Progress,
+  Title,
+} from "@mantine/core";
 
 export default function Tasks({ course, day, tasks, tasks_ready }) {
   const theme = useMantineTheme();
@@ -34,29 +46,34 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
         <Space h="xl" />
         <Row>
           <Col md={4}>
-            <Card.Section style={{ position: "relative" }}>
-              {day.image ? (
-                <Image src={"/" + day.image} width={1200} height={550} alt="Инкубатор талантов" />
-              ) : course.image ? (
-                <Image src={"/" + course.image} width={1200} height={550} alt="Инкубатор талантов" />
-              ) : (
-                <></>
-              )}
-              <Title
-                order={1}
-                weight={700}
+            <Card shadow="sm" padding="lg" radius="md" withBorder className="mb-4 p-5" style={{ height: "300px" }}>
+              <div
                 style={{
-                  position: "absolute",
-                  top: "20px",
-                  left: "20px",
-                  filter: "drop-shadow(0px 0px 12px #FFF)",
-                  color: "#fd7e14",
+                  color: "#036459",
+                  fontWeight: "600",
+                  fontSize: "24px",
                 }}
               >
                 {day.name}
-              </Title>
-            </Card.Section>
-            <Progress color="#1FBEAC" size="lg" value={(tasks_ready / tasks.length) * 100} style={{ zIndex: "12" }} />
+              </div>
+              {/* <div>
+                {day.image ? (
+                  <Image src={"/" + day.image} width={"100%"} height={"100%"} alt="Инкубатор талантов" />
+                ) : course.image ? (
+                  <Image src={"/" + course.image} width={"100%"} height={"100%"} alt="Инкубатор талантов" />
+                ) : (
+                  <></>
+                )}
+              </div> */}
+            </Card>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <div className="d-flex justify-content-center">
+                <RingProgress
+                  label={<Text align="center">{Math.round((tasks_ready / tasks.length) * 100)}%</Text>}
+                  sections={[{ value: (tasks_ready / tasks.length) * 100, color: "#1FBEAC" }]}
+                />
+              </div>
+            </Card>
           </Col>
           <Col md={8}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>

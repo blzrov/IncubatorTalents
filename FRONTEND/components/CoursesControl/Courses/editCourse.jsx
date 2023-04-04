@@ -8,6 +8,7 @@ import {
   Group,
   Text,
   Tabs,
+  Card,
   Space,
   Button,
   useMantineTheme,
@@ -140,16 +141,13 @@ export const EditCourse = ({ opened, setOpened, updateCoursesList, editCourseId 
   const dropzoneChildren = (status, theme) => (
     <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: "none" }}>
       {image ? (
-        <Image src={createObjectURL ? createObjectURL : "/" + image} width={100} height={70} alt="Изображение курса" />
+        <Image src={createObjectURL ? createObjectURL : "/" + image} width={125} height={125} alt="Изображение курса" />
       ) : (
         <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
       )}
       <div>
         <Text size="xl" inline>
           Переместите фото сюда
-        </Text>
-        <Text size="sm" color="dimmed" inline mt={7}>
-          Файл размером не более 5 мегабайт
         </Text>
       </div>
     </Group>
@@ -239,38 +237,35 @@ export const EditCourse = ({ opened, setOpened, updateCoursesList, editCourseId 
           </div>
           <Row>
             <Col md={4}>
-              <Dropzone
-                onDrop={(files) => {
-                  setImage(files[0]);
-                  setCreateObjectURL(URL.createObjectURL(files[0]));
-                }}
-                onReject={() => {
-                  showNotification({
-                    title: "Файл отклонен",
-                    autoClose: 3500,
-                    color: "red",
-                    icon: <X size={18} />,
-                  });
-                }}
-                maxSize={3 * 1024 ** 2}
-                accept={IMAGE_MIME_TYPE}
-                padding="xs"
-              >
-                {(status) => dropzoneChildren(status, theme)}
-              </Dropzone>
-              <InputWrapper
-                required
-                label="Название курса"
-                description="Название курса в свободной форме, будет отображаться в качесвте заголовка"
-                error={nameError}
-              >
-                <Input
-                  type="text"
-                  name="name"
-                  value={nameDefaultValue}
-                  onChange={(e) => setNameDefaultValue(e.currentTarget.value)}
-                />
-              </InputWrapper>
+              <Card shadow="sm" padding="lg" radius="md" withBorder>
+                <Dropzone
+                  onDrop={(files) => {
+                    setImage(files[0]);
+                    setCreateObjectURL(URL.createObjectURL(files[0]));
+                  }}
+                  onReject={() => {
+                    showNotification({
+                      title: "Файл отклонен",
+                      autoClose: 3500,
+                      color: "red",
+                      icon: <X size={18} />,
+                    });
+                  }}
+                  maxSize={3 * 1024 ** 2}
+                  accept={IMAGE_MIME_TYPE}
+                  padding="xs"
+                >
+                  {(status) => dropzoneChildren(status, theme)}
+                </Dropzone>
+                <InputWrapper required label="Название курса" error={nameError}>
+                  <Input
+                    type="text"
+                    name="name"
+                    value={nameDefaultValue}
+                    onChange={(e) => setNameDefaultValue(e.currentTarget.value)}
+                  />
+                </InputWrapper>
+              </Card>
             </Col>
             <Col md={8}>
               <Tabs unstyled color="#036459">

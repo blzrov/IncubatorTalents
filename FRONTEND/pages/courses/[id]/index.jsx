@@ -18,6 +18,7 @@ import {
   Button,
   useMantineTheme,
   Progress,
+  RingProgress,
   Tabs,
   Title,
 } from "@mantine/core";
@@ -66,7 +67,20 @@ export default function Days({ course, days, tasks, tasks_ready }) {
               withBorder
               style={{ textAlign: "center", paddingBottom: "40px" }}
             >
-              <Progress color="#1FBEAC" size="lg" value={(tasks_ready / tasks) * 100} style={{ zIndex: "12" }} />
+              <div className="d-flex align-items-center justify-content-center">
+                <RingProgress
+                  label={<Text align="center">{Math.round((tasks_ready / tasks) * 100)}%</Text>}
+                  sections={[{ value: (tasks_ready / tasks) * 100, color: "#1FBEAC" }]}
+                />
+                <div style={{ paddingLeft: "20px", fontWeight: "600" }}>
+                  <div style={{ fontSize: "16px", color: "#036459", paddingLeft: "10px" }}>
+                    <span style={{ color: "#1FBEAC" }}>{tasks_ready}</span> выполнено
+                  </div>
+                  <div style={{ fontSize: "16px", color: "#036459", paddingLeft: "10px" }}>
+                    <span style={{ color: "#1FBEAC" }}>{tasks - tasks_ready}</span> осталось
+                  </div>
+                </div>
+              </div>
             </Card>
           </Col>
           <Col md={8}>

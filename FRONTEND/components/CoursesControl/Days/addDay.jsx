@@ -8,6 +8,7 @@ import {
   Text,
   Space,
   Button,
+  Card,
   useMantineTheme,
   Center,
   LoadingOverlay,
@@ -61,16 +62,13 @@ export const AddDay = ({ opened, setOpened, pushDay, courseId }) => {
   const dropzoneChildren = (status, theme) => (
     <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: "none" }}>
       {createObjectURL ? (
-        <img src={createObjectURL} width={100} />
+        <img src={createObjectURL} width={125} />
       ) : (
         <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
       )}
       <div>
         <Text size="xl" inline>
           Переместите фото сюда
-        </Text>
-        <Text size="sm" color="dimmed" inline mt={7}>
-          Файл размером не более 5 мегабайт
         </Text>
       </div>
     </Group>
@@ -159,33 +157,30 @@ export const AddDay = ({ opened, setOpened, pushDay, courseId }) => {
       <form onSubmit={saveDay}>
         <Row>
           <Col md={4}>
-            <Dropzone
-              onDrop={(files) => {
-                setImage(files[0]);
-                setCreateObjectURL(URL.createObjectURL(files[0]));
-              }}
-              onReject={() => {
-                showNotification({
-                  title: "Файл отклонен",
-                  autoClose: 3500,
-                  color: "red",
-                  icon: <X size={18} />,
-                });
-              }}
-              maxSize={3 * 1024 ** 2}
-              accept={IMAGE_MIME_TYPE}
-              padding="xs"
-            >
-              {(status) => dropzoneChildren(status, theme)}
-            </Dropzone>
-            <InputWrapper
-              required
-              label="Название дня"
-              description="Название дня в свободной форме, будет отображаться в качесвте заголовка"
-              error={nameError}
-            >
-              <Input type="text" name="name" />
-            </InputWrapper>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Dropzone
+                onDrop={(files) => {
+                  setImage(files[0]);
+                  setCreateObjectURL(URL.createObjectURL(files[0]));
+                }}
+                onReject={() => {
+                  showNotification({
+                    title: "Файл отклонен",
+                    autoClose: 3500,
+                    color: "red",
+                    icon: <X size={18} />,
+                  });
+                }}
+                maxSize={3 * 1024 ** 2}
+                accept={IMAGE_MIME_TYPE}
+                padding="xs"
+              >
+                {(status) => dropzoneChildren(status, theme)}
+              </Dropzone>
+              <InputWrapper required label="Название дня" error={nameError}>
+                <Input type="text" name="name" />
+              </InputWrapper>
+            </Card>
           </Col>
           <Col md={8}>
             <InputWrapper label="Видео" description="Ссылка на видео с YouTube" error={videoError}>
