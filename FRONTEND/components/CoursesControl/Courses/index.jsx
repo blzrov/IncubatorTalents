@@ -81,6 +81,8 @@ export const CoursesControl = () => {
       <Space h="xl" />
       {!addCourseModalOpened && !deleteCourseModalOpened && !editCourseModalOpened && !daysModalOpened && (
         <Main
+          setDeleteCourseId={setDeleteCourseId}
+          setDeleteCourseModalOpened={setDeleteCourseModalOpened}
           setAddCourseModalOpened={setAddCourseModalOpened}
           setEditCourseModalOpened={setEditCourseModalOpened}
           setEditCourseId={setEditCourseId}

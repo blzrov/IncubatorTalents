@@ -67,7 +67,7 @@ export const Days = ({ opened, setOpened, courseId }) => {
   return (
     <div>
       <Space h="sm" />
-      <div style={{ color: "#036459", fontSize: "20px", fontWeight: "600" }}>Материалы</div>
+      {!addDayModalOpened && <div style={{ color: "#036459", fontSize: "20px", fontWeight: "600" }}>Материалы</div>}
       <Space h="sm" />
       {!addDayModalOpened && ( //!addDayModalOpened && !tasksModalOpened
         <>

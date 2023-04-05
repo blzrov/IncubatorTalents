@@ -125,8 +125,9 @@ export const AddDay = ({ opened, setOpened, pushDay, courseId }) => {
   };
 
   return (
-    <div>
-      <div style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>Материалы &gt; Добавление дня</div>{" "}
+    <div className="mb-5">
+      <div style={{ color: "#036459", fontSize: "20px", fontWeight: "600" }}>Материалы &gt; Добавление дня</div>{" "}
+      <Space h="sm" />
       <div style={{ textAlign: "end" }}>
         <button
           type="submit"

@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "/utils/rest";
 import Container from "react-bootstrap/Container";
+import { ArrowBigRightLine } from "tabler-icons-react";
 
 import {
   Text,
@@ -98,14 +99,20 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
                 <Tabs.Tab label="Задания">
                   {tasks.map((task) => {
                     return (
-                      <Card p="lg" key={task.id} style={{ boxShadow: "0 0 12px #999", marginBottom: "20px" }}>
-                        <Card.Section>
+                      <Card
+                        shadow="sm"
+                        padding="lg"
+                        radius="md"
+                        withBorder
+                        key={task.id}
+                        style={{ marginBottom: "16px" }}
+                      >
+                        {/* <Card.Section>
                           {task.image && (
                             <Image src={"/" + task.image} width={300} height={120} alt="Инкубатор талантов" />
                           )}
-                        </Card.Section>
-
-                        <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
+                        </Card.Section> */}
+                        {/* <Group position="apart" style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>
                           <Text size="lg" weight={700} color="#036459">
                             {task.name}
                           </Text>
@@ -114,6 +121,23 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
                           <Button color="green" fullWidth style={{ marginTop: 14 }}>
                             Открыть задание
                           </Button>
+                        </Link> */}
+                        <Link passHref href={`/courses/${course.id}/days/${day.id}/tasks/${task.id}`}>
+                          <div
+                            className="d-flex align-items-center justify-content-between"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <div className="d-flex align-items-center">
+                              {/* <div style={{ paddingRight: "45px" }}>Img</div> */}
+                              <div>
+                                <div style={{ color: "#036459", fontWeight: "600" }}>{task.name}</div>
+                                {/* <div style={{ color: "#1FBEAC" }}>Статус</div> */}
+                              </div>
+                            </div>
+                            <div>
+                              <ArrowBigRightLine size={48} strokeWidth={2} color={"#036459"} />
+                            </div>
+                          </div>
                         </Link>
                       </Card>
                     );
@@ -123,14 +147,14 @@ export default function Tasks({ course, day, tasks, tasks_ready }) {
             </Card>
           </Col>
         </Row>
-        <Card p="lg">
+        {/* <Card p="lg">
           <Text
             size="sm"
             weight={500}
             style={{ color: secondaryColor, lineHeight: 1.5 }}
             dangerouslySetInnerHTML={{ __html: day.description }}
           ></Text>
-        </Card>
+        </Card> */}
       </Container>
     </>
   );
